@@ -26,9 +26,11 @@ function forEach(array, fn) {
  */
 function map(array, fn) {
   const result = [];
+
   for (let i = 0; i < array.length; i++) {
     result.push(fn(array[i], i, array));
   }
+
   return result;
 }
 
@@ -42,10 +44,12 @@ function map(array, fn) {
    reduce([1, 2, 3], (all, current) => all + current) // 6
  */
 function reduce(array, fn, initial) {
-  let result = initial ? initial : 0;
-  for (let i = 0; i < array.length; i++) {
+  let result = initial ? initial : array[0];
+
+  for (let i = initial ? 0 : 1; i < array.length; i++) {
     result = fn(result, array[i], i, array);
   }
+
   return result;
 }
 
@@ -58,11 +62,7 @@ function reduce(array, fn, initial) {
    upperProps({ name: 'Сергей', lastName: 'Петров' }) вернет ['NAME', 'LASTNAME']
  */
 function upperProps(obj) {
-  const result = [];
-  for (const key in obj) {
-    result.push(key.toUpperCase());
-  }
-  return result;
+  return Object.keys(obj).map((el) => el.toUpperCase());
 }
 
 /*
@@ -79,9 +79,14 @@ function upperProps(obj) {
 function createProxy(obj) {
   const objProxy = new Proxy(obj, {
     set: function (target, prop, val) {
-      return (target[prop] = val * val);
+      if (!isNaN(val)) {
+        return (target[prop] = val * val);
+      } else {
+        return (target[prop] = val);
+      }
     },
   });
+
   return objProxy;
 }
 
