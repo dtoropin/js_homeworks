@@ -10,7 +10,12 @@
  Пример:
    createDivWithText('loftschool') // создаст элемент div, поместит в него 'loftschool' и вернет созданный элемент
  */
-function createDivWithText(text) {}
+function createDivWithText(text) {
+  const el = document.createElement('div');
+  el.textContent = text;
+
+  return el;
+}
 
 /*
  Задание 2:
@@ -20,7 +25,9 @@ function createDivWithText(text) {}
  Пример:
    prepend(document.querySelector('#one'), document.querySelector('#two')) // добавит элемент переданный первым аргументом в начало элемента переданного вторым аргументом
  */
-function prepend(what, where) {}
+function prepend(what, where) {
+  where.insertBefore(what, where.firstChild);
+}
 
 /*
  Задание 3:
@@ -41,7 +48,17 @@ function prepend(what, where) {}
 
    findAllPSiblings(document.body) // функция должна вернуть массив с элементами div и span т.к. следующим соседом этих элементов является элемент с тегом P
  */
-function findAllPSiblings(where) {}
+function findAllPSiblings(where) {
+  const arr = [];
+
+  for (const el of where.children) {
+    if (el.nextElementSibling && el.nextElementSibling.nodeName === 'P') {
+      arr.push(el);
+    }
+  }
+
+  return arr;
+}
 
 /*
  Задание 4:
@@ -63,7 +80,7 @@ function findAllPSiblings(where) {}
 function findError(where) {
   const result = [];
 
-  for (const child of where.childNodes) {
+  for (const child of where.children) {
     result.push(child.textContent);
   }
 
@@ -82,7 +99,13 @@ function findError(where) {
    После выполнения функции, дерево <div></div>привет<p></p>loftchool!!!
    должно быть преобразовано в <div></div><p></p>
  */
-function deleteTextNodes(where) {}
+function deleteTextNodes(where) {
+  for (const el of where.childNodes) {
+    if (el.nodeType === 3) {
+      el.remove();
+    }
+  }
+}
 
 /*
  Задание 6:
@@ -95,11 +118,22 @@ function deleteTextNodes(where) {}
    После выполнения функции, дерево <span> <div> <b>привет</b> </div> <p>loftchool</p> !!!</span>
    должно быть преобразовано в <span><div><b></b></div><p></p></span>
  */
-function deleteTextNodesRecursive(where) {}
+function deleteTextNodesRecursive(where) {
+  for (let i = 0; i < where.childNodes.length; i++) {
+    const el = where.childNodes[i];
+
+    if (el.nodeType === 1) {
+      deleteTextNodesRecursive(el);
+    } else {
+      el.remove();
+      i--;
+    }
+  }
+}
 
 /*
  Задание 7 *:
-
+ 
  Необходимо собрать статистику по всем узлам внутри элемента переданного в параметре root и вернуть ее в виде объекта
  Статистика должна содержать:
  - количество текстовых узлов
@@ -107,7 +141,7 @@ function deleteTextNodesRecursive(where) {}
  - количество элементов каждого тега
  Для работы с классами рекомендуется использовать classList
  Постарайтесь не создавать глобальных переменных
-
+ 
  Пример:
    Для дерева <div class="some-class-1"><b>привет!</b> <b class="some-class-1 some-class-2">loftschool</b></div>
    должен быть возвращен такой объект:
@@ -117,23 +151,49 @@ function deleteTextNodesRecursive(where) {}
      texts: 3
    }
  */
-function collectDOMStat(root) {}
+function collectDOMStat(root) {
+  const obj = { tags: {}, classes: {}, texts: 0 };
+
+  (function readNodes(node) {
+    for (const el of node.childNodes) {
+      if (el.nodeType === 1) {
+        obj.tags[el.nodeName] = obj.tags[el.nodeName] + 1 || 1;
+
+        const list = el.classList.value.split(' ');
+
+        for (const className of list) {
+          if (className !== '') {
+            obj.classes[className] = obj.classes[className] + 1 || 1;
+          }
+        }
+      }
+
+      if (el.nodeType === 3) {
+        obj.texts++;
+      }
+
+      readNodes(el);
+    }
+  })(root);
+
+  return obj;
+}
 
 /*
  Задание 8 *:
-
+ 
  8.1: Функция должна отслеживать добавление и удаление элементов внутри элемента переданного в параметре where
  Как только в where добавляются или удаляются элементы,
  необходимо сообщать об этом при помощи вызова функции переданной в параметре fn
-
+ 
  8.2: При вызове fn необходимо передавать ей в качестве аргумента объект с двумя свойствами:
    - type: типа события (insert или remove)
    - nodes: массив из удаленных или добавленных элементов (в зависимости от события)
-
+ 
  8.3: Отслеживание должно работать вне зависимости от глубины создаваемых/удаляемых элементов
-
+ 
  Рекомендуется использовать MutationObserver
-
+ 
  Пример:
    Если в where или в одного из его детей добавляется элемент div
    то fn должна быть вызвана с аргументом:
@@ -141,9 +201,9 @@ function collectDOMStat(root) {}
      type: 'insert',
      nodes: [div]
    }
-
+ 
    ------
-
+ 
    Если из where или из одного из его детей удаляется элемент div
    то fn должна быть вызвана с аргументом:
    {
@@ -151,7 +211,34 @@ function collectDOMStat(root) {}
      nodes: [div]
    }
  */
-function observeChildNodes(where, fn) {}
+function observeChildNodes(where, fn) {
+  const observer = new MutationObserver((mutations) => {
+    const arg = { type: '', nodes: [] };
+
+    for (const mutation of mutations) {
+      if (mutation.addedNodes.length) {
+        arg.type = 'insert';
+
+        for (const node of mutation.addedNodes) {
+          arg.nodes.push(node);
+        }
+      } else if (mutation.removedNodes.length) {
+        arg.type = 'remove';
+
+        for (const node of mutation.removedNodes) {
+          arg.nodes.push(node);
+        }
+      }
+    }
+
+    fn(arg);
+  });
+
+  observer.observe(where, {
+    childList: true,
+    subtree: true,
+  });
+}
 
 export {
   createDivWithText,
