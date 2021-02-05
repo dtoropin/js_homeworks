@@ -88,6 +88,7 @@ async function start() {
     towns = await loadTowns();
     loadingBlock.style.display = 'none';
     filterBlock.style.display = '';
+    loadingFailedBlock.style.display = 'none';
   } catch (e) {
     loadingBlock.style.display = 'none';
     loadingFailedBlock.style.display = '';
