@@ -30,6 +30,7 @@
  */
 
 import './towns.html';
+import { loadAndSortTowns } from './functions';
 
 const homeworkContainer = document.querySelector('#app');
 
@@ -40,22 +41,7 @@ const homeworkContainer = document.querySelector('#app');
  https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json
  */
 function loadTowns() {
-  return new Promise((resolve) => {
-    const url =
-      'https://raw.githubusercontent.com/smelukov/citiesTest/master/cities.json';
-    const request = new XMLHttpRequest();
-    request.open('GET', url, false);
-    request.send(null);
-    const towns = JSON.parse(request.responseText);
-
-    towns.sort((prev, next) => {
-      if (prev.name < next.name) return -1;
-
-      if (prev.name > next.name) return 1;
-    });
-
-    resolve(towns);
-  });
+  return loadAndSortTowns();
 }
 
 /*
@@ -89,36 +75,41 @@ const filterResult = homeworkContainer.querySelector('#filter-result');
 loadingFailedBlock.style.display = 'none';
 filterBlock.style.display = 'none';
 
-loadTowns()
-  .then((towns) => {
+retryButton.addEventListener('click', () => start());
+
+filterInput.addEventListener('input', function () {
+  filtering(this.value);
+});
+
+let towns = [];
+
+async function start() {
+  try {
+    towns = await loadTowns();
     loadingBlock.style.display = 'none';
     filterBlock.style.display = '';
-
-    filterInput.addEventListener('input', function () {
-      const inputStr = filterInput.value;
-
-      if (inputStr) {
-        filterResult.innerHTML = '';
-
-        for (const town of towns) {
-          if (isMatching(town.name, inputStr)) {
-            const div = document.createElement('div');
-            div.innerText = town.name;
-            filterResult.appendChild(div);
-          }
-        }
-      } else {
-        filterResult.innerHTML = '';
-      }
-    });
-  })
-  .catch(() => {
+  } catch (e) {
     loadingBlock.style.display = 'none';
     loadingFailedBlock.style.display = '';
+  }
+}
 
-    retryButton.addEventListener('click', () => {
-      location.reload();
-    });
-  });
+function filtering(val) {
+  if (val) {
+    filterResult.innerHTML = '';
+
+    for (const town of towns) {
+      if (isMatching(town.name, val)) {
+        const div = document.createElement('div');
+        div.innerText = town.name;
+        filterResult.appendChild(div);
+      }
+    }
+  } else {
+    filterResult.innerHTML = '';
+  }
+}
+
+start();
 
 export { loadTowns, isMatching };
