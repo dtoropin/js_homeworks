@@ -19,9 +19,60 @@ import './dnd.html';
 
 const homeworkContainer = document.querySelector('#app');
 
-document.addEventListener('mousemove', (e) => {});
+document.addEventListener('mousedown', (e) => {
+  // mousemove
 
-export function createDiv() {}
+  if (e.buttons !== 1 || !e.target.classList.contains('draggable-div')) return;
+
+  const elem = e.target;
+  elem.style.zIndex = 1000;
+
+  const coords = getCoords(elem);
+  const shiftX = e.pageX - coords.left;
+  const shiftY = e.pageY - coords.top;
+
+  document.onmousemove = function (e) {
+    move(e);
+  };
+
+  elem.onmouseup = function () {
+    document.onmousemove = null;
+    return null;
+  };
+
+  function move(e) {
+    elem.style.left = e.pageX - shiftX + 'px';
+    elem.style.top = e.pageY - shiftY + 'px';
+  }
+});
+
+function getCoords(elem) {
+  const box = elem.getBoundingClientRect();
+  return {
+    top: box.top + pageYOffset,
+    left: box.left + pageXOffset,
+  };
+}
+
+function getRandomInRange(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+export function createDiv() {
+  const box = document.createElement('div');
+  box.classList.add('draggable-div');
+
+  box.style.width = getRandomInRange(10, 500) + 'px';
+  box.style.height = getRandomInRange(10, 300) + 'px';
+  box.style.backgroundColor =
+    '#' + (Math.random().toString(16) + '000000').substring(2, 8);
+
+  box.style.position = 'absolute';
+  box.style.top = getRandomInRange(20, 500) + 'px';
+  box.style.left = getRandomInRange(0, 500) + 'px';
+
+  return box;
+}
 
 const addDivButton = homeworkContainer.querySelector('#addDiv');
 
