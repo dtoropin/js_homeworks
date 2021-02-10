@@ -21,38 +21,38 @@ const homeworkContainer = document.querySelector('#app');
 
 document.addEventListener('mousedown', (e) => {
   // mousemove
+  e.preventDefault();
 
   if (e.buttons !== 1 || !e.target.classList.contains('draggable-div')) return;
 
   const elem = e.target;
   elem.style.zIndex = 1000;
 
-  const coords = getCoords(elem);
-  const shiftX = e.pageX - coords.left;
-  const shiftY = e.pageY - coords.top;
+  let xStart = elem.clientX;
+  let yStart = elem.clientY;
 
-  document.onmousemove = function (e) {
-    move(e);
+  const onMouseMove = function (evt) {
+    evt.preventDefault();
+
+    const xNew = xStart - evt.clientX;
+    const yNew = yStart - evt.clientY;
+
+    xStart = evt.clientX;
+    yStart = evt.clientY;
+
+    elem.style.top = elem.offsetTop - yNew + 'px';
+    elem.style.left = elem.offsetLeft - xNew + 'px';
   };
 
-  elem.onmouseup = function () {
-    document.onmousemove = null;
-    return null;
+  const onMouseUp = function () {
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+    elem.style.zIndex = 1;
   };
 
-  function move(e) {
-    elem.style.left = e.pageX - shiftX + 'px';
-    elem.style.top = e.pageY - shiftY + 'px';
-  }
+  document.addEventListener('mousemove', onMouseMove);
+  document.addEventListener('mouseup', onMouseUp);
 });
-
-function getCoords(elem) {
-  const box = elem.getBoundingClientRect();
-  return {
-    top: box.top + pageYOffset,
-    left: box.left + pageXOffset,
-  };
-}
 
 function getRandomInRange(min, max) {
   return Math.floor(Math.random() * (max - min + 1)) + min;
