@@ -80,7 +80,7 @@ function showTable() {
     )
       continue;
 
-    fragment.append(createItemTable(key, cookies[key]));
+    if (key) fragment.append(createItemTable(key, cookies[key]));
   }
 
   listTable.append(fragment);
