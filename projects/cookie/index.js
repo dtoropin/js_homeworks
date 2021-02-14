@@ -48,7 +48,11 @@ const listTable = homeworkContainer.querySelector('#list-table tbody');
 filterNameInput.addEventListener('input', showTable);
 
 addButton.addEventListener('click', () => {
-  document.cookie = `${addNameInput.value.trim()}=${escape(addValueInput.value.trim())}`;
+  const cookieName = encodeURIComponent(addNameInput.value.trim());
+  const cookieValue = encodeURIComponent(addValueInput.value.trim());
+
+  document.cookie = `${cookieName}=${cookieValue}`;
+
   addNameInput.value = '';
   addValueInput.value = '';
 
@@ -60,17 +64,19 @@ listTable.addEventListener('click', (e) => {
 
   if (cookieName) {
     document.cookie = `${cookieName}=; max-age=-1`;
+
     showTable();
   }
 });
 
 showTable();
 
+// help functions
 function showTable() {
   const cookies = getCookies();
   const filter = filterNameInput.value.trim();
   const fragment = document.createDocumentFragment();
-  listTable.innerText = '';
+  listTable.innerHTML = '';
 
   for (const key in cookies) {
     if (
@@ -90,6 +96,7 @@ function getCookies() {
   return document.cookie.split('; ').reduce((prev, current) => {
     const [name, value] = current.split('=');
     prev[name] = value;
+
     return prev;
   }, {});
 }
