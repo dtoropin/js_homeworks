@@ -5,16 +5,136 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="./reset.css">
-  <link rel="stylesheet" href="./index.css">
   <title>Chat</title>
 </head>
 
 <body>
   <div class="wrapper">
+    <section class="login" style="display:none">
+      <div class="login__block">
+        <img class="login__img" src='reosurces/4f014a1d.svg' alt="login image">
+        <h2 class="login__title">Авторизация</h2>
+        <p class="login__desc">
+          Введите пожалуйста свой ник для дальнейшей авторизации
+        </p>
+        <input type="text" class="login__input" placeholder="Введите свой ник">
+        <button class="login__btn">войти</button>
+      </div>
+    </section>
 
+    <section class="chat">
+      <aside class="chat__user">
+        <div class="hamburger">
+          <span class="hamburger__elem"></span>
+          <span class="hamburger__elem"></span>
+          <span class="hamburger__elem"></span>
+        </div>
+
+        <ul class="userList">
+          <li class="userList__item">
+            <img class="userList__img" src="reosurces/aee9b107.png" alt="user avatar">
+            <div class="userList__info">
+              <span class="userList__nick">Boroda23</span>
+              <span class="userList__mess">Рад был пообщаться</span>
+            </div>
+          </li>
+
+          <li class="userList__item">
+            <img class="userList__img" src="reosurces/aee9b107.png" alt="user avatar">
+            <div class="userList__info">
+              <span class="userList__nick">Nick</span>
+              <span class="userList__mess">Привет!</span>
+            </div>
+          </li>
+        </ul>
+      </aside>
+
+      <div class="chat__main">
+        <div class="chat__header">
+          <div class="chat__title">Чат</div>
+          <div class="chat__count">2 участника</div>
+        </div>
+
+        <div class="chat__message">
+          <div class="messages">
+            <div class="messages__user">
+              <img src="reosurces/aee9b107.png" alt="user avatar" class="messages__img">
+            </div>
+
+            <div class="messages__send">
+              <span class="messages__nick">Boroda23</span>
+              <ul class="messages__list">
+                <li class="messages__item">
+                  <span class="messages__text">Привет!</span>
+                  <sub class="messages__time">17:55</sub>
+                </li>
+
+                <li class="messages__item">
+                  <span class="messages__text">Как дела?</span>
+                  <sub class="messages__time">17:56</sub>
+                </li>
+              </ul>
+            </div>
+          </div><!-- .messages -->
+
+          <div class="messages messages--opposite">
+            <div class="messages__user">
+              <img src="reosurces/aee9b107.png" alt="user avatar" class="messages__img">
+            </div>
+
+            <div class="messages__send">
+              <span class="messages__nick">Nick</span>
+              <ul class="messages__list">
+                <li class="messages__item">
+                  <span class="messages__text">Привет!</span>
+                  <sub class="messages__time">17:58</sub>
+                </li>
+
+                <li class="messages__item">
+                  <span class="messages__text">Давно не виделись!!</span>
+                  <sub class="messages__time">18:00</sub>
+                </li>
+              </ul>
+            </div>
+          </div><!-- .messages -->
+        </div>
+
+        <div class="chat__footer">
+          <input type="text" class="chat__input" placeholder="Введите сообщение..." autofocus>
+          <button class="chat__btn">Отправить</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="tuning" style="display:none">
+      <div class="tuning__block">
+        <img class="tuning__img" src="reosurces/9f7d1432.png" alt="avatar">
+        <p class="tuning__desc">
+          Область для профильной фотографии
+        </p>
+        <div class="tuning__buttons">
+          <button class="tuning__cancel">ОТМЕНА</button>
+          <button class="tuning__save">СОХРАНИТЬ</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="load" style="display:none">
+      <div class="load__block">
+        <h3 class="load__title">Загрузка фото...</h3>
+        <div class="load__photo">
+          <div class="load__img">
+            <img src="reosurces/35f5e73d.png" alt="load photo">
+          </div>
+          <span class="load__nick">Nik</span>
+        </div>
+        <div class="cancel">
+          <span class="cancel__item"></span>
+          <span class="cancel__item"></span>
+        </div>
+      </div>
+    </section>
   </div>
-  <script src="./chat.js"></script>
 </body>
 
 </html>

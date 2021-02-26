@@ -121,6 +121,9 @@ button {
 input,
 textarea,
 select {
+  outline: none;
+  border: none;
+  width: 100%;
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
@@ -164,4 +167,5 @@ input:-webkit-autofill {
 }
 textarea {
   vertical-align: top;
+  resize: none;
 }
