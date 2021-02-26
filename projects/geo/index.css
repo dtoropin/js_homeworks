@@ -1,0 +1,87 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+}
+
+#map {
+	height: 100vh;
+}
+
+.popup {
+	width: 353px;
+	/* padding: 30px 27px 30px 17px; */
+}
+
+.popup__title {
+	font-weight: 700;
+	margin-bottom: 20px;
+	line-height: 18px;
+}
+
+.myForm__item {
+	margin-bottom: 10px;
+}
+
+.myForm__input {
+	width: 100%;
+	padding: 10px;
+	border-radius: 3px;
+	border: 1px solid #cfcfcf;
+	font-size: 14px;
+	line-height: 16px;
+	outline: none;
+}
+
+.myForm__input:focus {
+	border: 1px solid #1371c8;
+}
+
+.myForm__input--request {
+	height: 98px;
+	resize: none;
+}
+
+.myForm__btn {
+	padding: 10px 16px;
+	border-radius: 3px;
+	color: #fff;
+	background-color: #ff8663;
+	border: 1px solid #ff8663;
+	outline: none;
+	cursor: pointer;
+}
+
+.myForm__btn:active {
+	box-shadow: inset 0 0 7px #b1634d;
+}
+
+.review {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+	max-height: 500px;
+	/* overflow-y: scroll; */
+}
+
+.review__item + .review__item {
+	margin-top: 20px;
+}
+
+.review__name {
+	color: #000000;
+	margin-right: 8px;
+}
+
+.review__place,
+.review__text {
+	color: #8f8f8f;
+}
+
+.review__text {
+	padding: 0;
+	margin-top: 4px;
+}
