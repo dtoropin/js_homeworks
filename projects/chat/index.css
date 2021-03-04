@@ -330,7 +330,21 @@ textarea {
   flex-grow: 1;
   background: #0e1621;
   padding: 10px 17px;
-  overflow-y: auto;
+  overflow-y: scroll;
+}
+
+.chat__message::-webkit-scrollbar {
+  width: 10px;
+}
+
+.chat__message::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.3);
+  border-radius: 10px;
+}
+
+.chat__message::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 8px rgba(0, 0, 0, 0.9);
 }
 
 .chat__footer {
