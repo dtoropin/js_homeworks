@@ -12,10 +12,12 @@ export default class Chat {
     });
 
     function sendMessage() {
-      const message = messageInput.value.trim();
+      const message = messageInput.value
+        .trim()
+        .replace(/[^a-zA-Z0-9а-яА-Я:;.,?() ]/g, '');
       messageInput.value = '';
 
-      messSend(message);
+      if (message !== '') messSend(message);
     }
   }
 
