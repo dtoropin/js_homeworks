@@ -14,16 +14,16 @@
 
   <section class="chat hidden" id="chat">
     <aside class="chat__user">
-      <div class="hamburger">
+      <div class="hamburger" id="hamburger">
         <span class="hamburger__elem"></span>
         <span class="hamburger__elem"></span>
         <span class="hamburger__elem"></span>
       </div>
 
       <div class="userList">
-        <div class="userList__item first">
-          <span class="userList__img" data-role="user-photo"></span>
-          <span class="userList__info" data-role="user-name"></span>
+        <div class="userList__item first" data-role="user-info">
+          <span class="userList__img"></span>
+          <span class="userList__info"></span>
         </div>
         <ul data-role="user-list"></ul>
       </div><!-- .userList -->
@@ -44,7 +44,7 @@
     </div>
   </section>
 
-  <section class="tuning hidden">
+  <section class="tuning hidden" id="photo">
     <div class="tuning__block">
       <span class="tuning__img"></span>
       <p class="tuning__desc">

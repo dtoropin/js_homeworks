@@ -413,7 +413,7 @@ textarea {
   width: 284px;
   height: 308px;
   margin-bottom: 15px;
-  background: url("./img/photo.png") no-repeat top center / cover;
+  background: no-repeat top center / cover;
 }
 
 .tuning__desc {
@@ -511,6 +511,7 @@ textarea {
   border-radius: 50%;
   margin-right: 10px;
   background: url("./img/anonim.png") no-repeat center / cover;
+  cursor: pointer;
 }
 
 .userList__info {
