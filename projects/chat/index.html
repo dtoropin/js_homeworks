@@ -1,0 +1,59 @@
+<div class="wrapper">
+  <section class="login" id="login">
+    <div class="login__block">
+      <span class="login__img"></span>
+      <h2 class="login__title">Авторизация</h2>
+      <p class="login__desc">
+        Введите пожалуйста свой ник для дальнейшей авторизации
+      </p>
+      <input type="text" class="login__input" placeholder="Введите свой ник" data-role="login-input">
+      <button class="login__btn" data-role="login-button">войти</button>
+      <span class="login__error" data-role="login-error"></span>
+    </div>
+  </section>
+
+  <section class="chat hidden" id="chat">
+    <aside class="chat__user">
+      <div class="hamburger" id="hamburger">
+        <span class="hamburger__elem"></span>
+        <span class="hamburger__elem"></span>
+        <span class="hamburger__elem"></span>
+      </div>
+
+      <div class="userList">
+        <div class="userList__item first" data-role="user-info">
+          <span class="userList__img"></span>
+          <span class="userList__info"></span>
+        </div>
+        <ul data-role="user-list"></ul>
+      </div><!-- .userList -->
+    </aside>
+
+    <div class="chat__main">
+      <div class="chat__header">
+        <div class="chat__title">Чат</div>
+        <div class="chat__count" data-role="user-count"></div>
+      </div>
+
+      <div class="chat__message" data-role="messages-list"></div>
+
+      <div class="chat__footer">
+        <input type="text" class="chat__input" data-role="message-input" placeholder="Введите сообщение..." autofocus>
+        <button class="chat__btn" data-role="message-send">Отправить</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="tuning hidden" id="photo">
+    <div class="tuning__block">
+      <span class="tuning__img"></span>
+      <p class="tuning__desc">
+        Область для профильной фотографии
+      </p>
+      <div class="tuning__buttons">
+        <button class="tuning__cancel">ОТМЕНА</button>
+        <button class="tuning__save">СОХРАНИТЬ</button>
+      </div>
+    </div>
+  </section>
+</div><!-- .wrapper -->
